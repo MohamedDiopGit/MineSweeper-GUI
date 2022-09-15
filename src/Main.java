@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Main extends JFrame {
     private final GUI gui;
-
+    private final Field field;
     Main(){
         setTitle("Minesweeper GUI");
         gui = new GUI();
@@ -18,5 +18,10 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         new Main();
+    }
+
+
+    public Field getField(){
+        return this.field;
     }
 }
