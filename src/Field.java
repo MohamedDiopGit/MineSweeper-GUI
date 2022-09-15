@@ -11,7 +11,7 @@ public class Field {
     private final static int dimParam[] = {5 ,7 ,9, 12};  // Possible dimensions of the minefield depending on level difficulty
     private final int dimParameter;
 
-    private boolean [][] field; // Minefield
+    private boolean [][] fieldGrid; // Minefield
     private int nbMinesPlaced = 0;
 
     private Levels level;
@@ -38,6 +38,7 @@ public class Field {
             nbMinesToPlace = nbMines[level.ordinal()];  // EASY = 0 / MEDIUM = 1 / HARD = 2
             dimParameter = dimParam[level.ordinal()];
         }
+
     }
 
     Field(int nbMinesPlaced, int dimParameter){
@@ -51,22 +52,22 @@ public class Field {
     }
     /* Field methods */
     public void initField() {      // Place the mine in the field
-        this.field = new boolean[dimParameter][dimParameter];
+        this.fieldGrid = new boolean[dimParameter][dimParameter];
         Random alea = new Random();
         while(nbMinesPlaced < nbMinesToPlace){     // Check if there is enough available places to place a mine
             int x = alea.nextInt(dimParameter);  // Random generation of place (x,y) on the field
             int y = alea.nextInt(dimParameter);
-            if(!this.field[x][y]){      // Check if the position is not currently occupied
-                this.field[x][y] = true;
+            if(!this.fieldGrid[x][y]){      // Check if the position is not currently occupied
+                this.fieldGrid[x][y] = true;
                 nbMinesPlaced++;        // increments the number of placed mines
             }
         }
     }
 
     public void display() {     // Display the entire field of mine
-        for (int x =0; x < field.length;x++){
-            for(int y = 0; y < field[0].length;y++){    // For loop on the matrix to display all objects
-                if (field[x][y])
+        for (int x =0; x < fieldGrid.length;x++){
+            for(int y = 0; y < fieldGrid[0].length;y++){    // For loop on the matrix to display all objects
+                if (fieldGrid[x][y])
                     System.out.print('x'); // Display a mine if true
                 else
                     System.out.print(computeNbMines(x,y)); // Display an empty case
@@ -75,20 +76,21 @@ public class Field {
         }
     }
 
-    /* Level methods */
-
-    int computeNbMines(int x, int y){
+    int computeNbMines(int x, int y){       // Compute the number of mine around a non-mined case
         int nb = 0;
 
+
+        // Inferior limit for edge cases
         int borneInfX = x==0 ? 0 : x-1;
         int borneInfY = y==0 ? 0 : y-1;
 
-        int borneSupX = x==field.length-1 ? field.length-1 : x+1;
-        int borneSupY = y==field[0].length-1 ? field[0].length-1 : y+1;
+        // Superior limit for edge cases
+        int borneSupX = x==fieldGrid.length-1 ? fieldGrid.length-1 : x+1;
+        int borneSupY = y==fieldGrid[0].length-1 ? fieldGrid[0].length-1 : y+1;
 
         for(int i = borneInfX ; i <= borneSupX ; i++){
             for(int j = borneInfY ; j <= borneSupY ; j++){
-                if(field[i][j]){
+                if(fieldGrid[i][j]){
                     nb++;
                 }
             }
@@ -97,6 +99,15 @@ public class Field {
     }
 
 
+    public int getDim(){  // Getter : return the dimension parameter of the grid
+        return this.dimParameter;
+    }
 
+    public String getElementFromXY(int x, int y){  // Return the current state of a case on the grid
+        if(this.fieldGrid[x][y]){
+            return "x";
+        }
+        return String.valueOf(computeNbMines(x,y));
+    }
 
 }
