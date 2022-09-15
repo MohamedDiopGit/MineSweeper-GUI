@@ -1,8 +1,16 @@
 import javax.swing.*;
 
 public class Main extends JFrame {
+    private final GUI gui;
+
     Main(){
         setTitle("Minesweeper GUI");
+        gui = new GUI();
+        new GUI();
+
+        setContentPane(gui);  // Set the center Panel for the frame
+
+        //getContentPane().add(lab);
         pack();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);        // Close correctly the frame
