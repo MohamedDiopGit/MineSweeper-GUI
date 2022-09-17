@@ -103,11 +103,17 @@ public class Field {
         return this.dimParameter;
     }
 
-    public String getElementFromXY(int x, int y){  // Return the current state of a case on the grid
+    public String getElementFromXY(int x, int y, boolean computeOrNot){  // Return the current state of a case on the grid
         if(this.fieldGrid[x][y]){
             return "x";
         }
-        return String.valueOf(computeNbMines(x,y));
+        else{
+            if(computeOrNot){
+                return String.valueOf(computeNbMines(x,y));
+            }
+            return "0";
+        }
+
     }
 
 }
