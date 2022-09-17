@@ -14,13 +14,14 @@ public class Field {
     private boolean [][] fieldGrid; // Minefield
     private int nbMinesPlaced = 0;
 
-    private Levels level;
+    private Levels levelGame;
     Field(){
         this.dimParameter = 5;
         this.nbMinesToPlace = 3;
     }
     Field(Levels level) {
-        // Default constructor for field7
+        // Default constructor for field
+        this.levelGame = level;
         if(level.ordinal() == 3){       // CUSTOM level = 3
 
             // The user select the number of mines to place:
@@ -41,6 +42,9 @@ public class Field {
 
     }
 
+    public Levels getLevel(){
+       return this.levelGame;
+    }
     Field(int nbMinesPlaced, int dimParameter){
         this.dimParameter = dimParameter;
         this.nbMinesToPlace = nbMinesPlaced;

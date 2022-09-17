@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.util.Scanner;
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
@@ -19,7 +20,8 @@ public class GUI extends JPanel{
 
     private Timer timer;
     private int seconds =0;  // Seconds elapsed since the beginning
-    private int timeLimit = 20; // Number of seconds fixing the time limit : it should depends on the level 
+    private final int timeLimits[] = {10,100,30}; // Number of seconds fixing the time limit : it should depends on the level 
+    private int timeLimit;
     
     private JLabel score = new JLabel();
     private int scoreTemp = 0;
@@ -28,20 +30,35 @@ public class GUI extends JPanel{
     private JLabel timeSession = new JLabel();
     private JButton restart = new JButton("Restart"); // restart button
     private JPanel panelCenter = new JPanel();
+    private Levels levelGame;
 
 
     GUI(Main main){
         this.main = main;
         this.field = main.getField();
+        this.levelGame = field.getLevel();
+        this.setTimeLimit();
         this.displayGUI();
     }
 
+    public void setTimeLimit(){
+        if(levelGame.ordinal() == 4){   // CUSTOM limit from Custom level option
+            Scanner sc = new Scanner(System.in);
+            System.out.print("[CUSTOM] Select the time limit: ");
+            int parameter = sc.nextInt();
+            this.timeLimit = parameter;
+        }
+        else{
+            this.timeLimit = timeLimits[levelGame.ordinal()];
+        }
+    }
     public void displayGUI(){
         setLayout(new BorderLayout());
         this.timeElapsed();
         this.displayScore();
-        this.displayStartEmptyField();
         this.restartGame();
+        this.reInitField();
+        this.displayStartEmptyField();
     }
 
     public void displayStartEmptyField(){
@@ -96,7 +113,7 @@ public class GUI extends JPanel{
 
 
                 if(box.getText() == "x"){  // If there is a mine
-                    box.setText("x");   // Hide it with a white background and not text
+                    box.setText("");   // Hide it with a white background and not text
                     
                     box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over event"
                         @Override
@@ -195,7 +212,20 @@ public class GUI extends JPanel{
 
                             }  
                         });
-                        
+                        box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over event"
+                        @Override
+                        public void mouseClicked(MouseEvent event) {
+
+                            if (isRightMouseButton(event))  // Set the box with a red flag
+                            {
+                                if(field.getElementFromXY(xBox,yBox,false) == "x" && box.getText() != "🚩"){  // Chech if there is a mine and not flagged before
+                                   scoreTemp++;
+                                   score.setText(String.valueOf(scoreTemp));
+                                }
+                                box.setText("🚩");
+                            }
+                        }
+                    });
                     }
                 }
             }
@@ -215,7 +245,7 @@ public class GUI extends JPanel{
     }
 
     public void reInitField(){
-        seconds =0;
+        seconds = 0;
         scoreTemp = 0;
         score.setText(String.valueOf(scoreTemp));
         timeSession.setText(String.valueOf(seconds));
@@ -234,7 +264,7 @@ public class GUI extends JPanel{
                 if(seconds == timeLimit){
                     JOptionPane.showMessageDialog(main, "TIME LIMIT : Game Over LOOSER 🤣",
                                         "GAME OVER", JOptionPane.WARNING_MESSAGE);
-                                reInitField();
+                    reInitField();
                 }
             }
         });
