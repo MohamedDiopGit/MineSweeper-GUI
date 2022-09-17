@@ -22,16 +22,20 @@ public class GUI extends JPanel{
     public void displayGUI() {
 
 
-        JPanel monPanel = new JPanel();
+        JPanel panelCenter = new JPanel();
+        setLayout(new BorderLayout());
+        add(panelCenter, BorderLayout.CENTER);
+
         int dimParam = this.field.getDim();
-        monPanel.setLayout(new GridLayout(dimParam, dimParam));
+        panelCenter.setLayout(new GridLayout(dimParam, dimParam));
 
         for (int x = 0; x < dimParam; x++) {
             for (int y = 0; y < dimParam; y++) {    // For loop on the matrix to display all objects
-                monPanel.add( new JLabel(this.field.getElementFromXY(x,y) ) );
+                JButton button = new JButton(this.field.getElementFromXY(x,y));
+                panelCenter.add(button);
             }
         }
-        add(monPanel);
+        add(panelCenter);
     }
 
 }

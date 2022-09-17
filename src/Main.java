@@ -4,6 +4,7 @@ public class Main extends JFrame {
     private final GUI gui;
     private final Field field = new Field(Levels.MEDIUM);
     Main(){
+        System.out.println("Minesweeper GUI : Launched");
         setTitle("Minesweeper GUI");
         this.field.initField();   // initialisation of the field
         gui = new GUI(this);
@@ -14,11 +15,10 @@ public class Main extends JFrame {
         pack();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);        // Close correctly the frame
+        System.out.println("Minesweeper GUI : Closed.");
     }
     public static void main(String[] args) {
-        System.out.println("Minesweeper GUI : Launched");
         new Main();
-        System.out.println("Minesweeper GUI : Closed.");
     }
 
 
