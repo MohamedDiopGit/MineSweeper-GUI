@@ -20,7 +20,7 @@ public class GUI extends JPanel{
 
     private Timer timer;    // timer for the session which update every second the "timeSession"
     private int seconds =0;  // Seconds elapsed since the beginning
-    private final int timeLimits[] = {300,100,30}; // Number of seconds fixing the time limit : it should depends on the level 
+    private final int timeLimits[] = {300,150,70}; // Number of seconds fixing the time limit : it should depends on the level0
     private int timeLimit;  // Time limit for the game session
     
     private JLabel score = new JLabel();    // score of the current game session
@@ -61,7 +61,12 @@ public class GUI extends JPanel{
             int option = JOptionPane.showConfirmDialog(null, message, "Set Game Parameters", JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) { // Check if OK_OPTION is ok
                 this.timeLimit = Integer.valueOf(parameter.getText());
-            }  
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Error in setting time limit, please try again. 300s selected.",
+                                        "ERROR", JOptionPane.WARNING_MESSAGE);
+                this.timeLimit = timeLimits[0];
+            }
         }
         else{
             this.timeLimit = timeLimits[levelGame.ordinal()];
@@ -149,7 +154,7 @@ public class GUI extends JPanel{
             for (int y = 0; y < dimParam; y++) {    // For loop on the matrix to display all objects
                 JButton box = new JButton();  // Clickable button on each minefield's boxes
                 box.setBackground(Color.WHITE);
-                box.setPreferredSize(new Dimension(60,50));
+                box.setPreferredSize(new Dimension(70,60));
                 panelCenter.add(box);
 
                 final int xOnStart = x;
@@ -185,7 +190,7 @@ public class GUI extends JPanel{
 
                 JButton box = new JButton(this.field.getElementFromXY(x,y,false));  // Clickeable button on each minefield's boxes
                 box.setBackground(Color.WHITE);
-                box.setPreferredSize(new Dimension(60,50));
+                box.setPreferredSize(new Dimension(70,60));
                 panelCenter.add(box);
 
 
