@@ -7,9 +7,9 @@ Then you have "CUSTOM" Mode, where you specify the dimension or the grid and the
 
 The "main.java" uses directly "GUI.java" which uses both "Levels.java" (enum types of four levels) and "Field.java"  
   
- GUI.java  : The main component that runs the Graphic interface, and manages the front and back-end process to call entities and specific functions in order to display the information. It allows to display the grid, the menubar correctly.  
- Field.java : The backend main component that create a grid for the minesweeper, the file makes the initialization of each boxes, and has getters to send data to the GUI  
- Levels.java : The four levels as an enum  
+ GUI.java  : The main component that runs the Graphic interface, and manages the front and back-end process to call entities and specific functions in order to display the information. It allows to display the grid, the menubar and the popus to give and collect data correctly.    
+ Field.java : The backend main component that create a grid for the minesweeper, the file makes the initialization of each boxes, and has getters to send data to the GUI    
+ Levels.java : The four levels as an enum    
  Main.java : The running program and the start of the game with an easy mode by default  
  
 Enjoy.  
