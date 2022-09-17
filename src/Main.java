@@ -15,7 +15,7 @@ public class Main extends JFrame {
         pack();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);        // Close correctly the frame
-        System.out.println("Minesweeper GUI : Closed.");
+        //System.out.println("Minesweeper GUI : Closed.");
     }
     public static void main(String[] args) {
         new Main();

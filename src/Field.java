@@ -62,6 +62,7 @@ public class Field {
                 nbMinesPlaced++;        // increments the number of placed mines
             }
         }
+        nbMinesPlaced = 0; // IMPORTANT : Re-initialization for further use in the GUI when restart for example
     }
 
     public void display() {     // Display the entire field of mine
