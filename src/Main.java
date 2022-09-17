@@ -1,3 +1,8 @@
+/*
+ * 
+ *  Main application : Minesweeper application
+ */
+
 import javax.swing.*;
 
 public class Main extends JFrame {
@@ -8,17 +13,13 @@ public class Main extends JFrame {
         setTitle("Minesweeper GUI");
         this.field.initField();   // initialisation of the field
         gui = new GUI(this);
-
         setContentPane(gui);  // Set the center Panel for the frame
-
-        //getContentPane().add(lab);
         pack();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);        // Close correctly the frame
-        //System.out.println("Minesweeper GUI : Closed.");
     }
     public static void main(String[] args) {
-        new Main();
+        new Main();  // Running the minesweeper program
     }
 
 

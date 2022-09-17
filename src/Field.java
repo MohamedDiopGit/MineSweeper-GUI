@@ -1,6 +1,8 @@
+/*
+    Field of the minesweeper
+ */
 import java.util.Random;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -14,7 +16,7 @@ public class Field {
     private final int dimParameter;
 
     private boolean [][] fieldGrid; // Minefield
-    private int nbMinesPlaced = 0;
+    private int nbMinesPlaced = 0;  // Number of mines placed during the minefield calculation
 
     private Levels levelGame;
     Field(){
@@ -65,10 +67,10 @@ public class Field {
 
     }
 
-    public Levels getLevel(){
+    public Levels getLevel(){   // Return the current level of the minefield
        return this.levelGame;
     }
-    Field(int nbMinesPlaced, int dimParameter){
+    Field(int nbMinesPlaced, int dimParameter){ 
         this.dimParameter = dimParameter;
         this.nbMinesToPlace = nbMinesPlaced;
     }
