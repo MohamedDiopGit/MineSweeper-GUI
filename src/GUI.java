@@ -14,39 +14,39 @@ import static javax.swing.SwingUtilities.isRightMouseButton;
 public class GUI extends JPanel{
 
 
-    private Field field;
+    private Field field;    // Field to play with and display in the GUI
 
-    private Main main;
+    private Main main;  // imported Main from the "main.java"
 
-    private Timer timer;
+    private Timer timer;    // timer for the session which update every second the "timeSession"
     private int seconds =0;  // Seconds elapsed since the beginning
     private final int timeLimits[] = {300,100,30}; // Number of seconds fixing the time limit : it should depends on the level 
-    private int timeLimit;
+    private int timeLimit;  // Time limit for the game session
     
-    private JLabel score = new JLabel();
+    private JLabel score = new JLabel();    // score of the current game session
     private int scoreTemp = 0;
     
-
-    private JLabel timeSession = new JLabel();
+    
+    private JLabel timeSession = new JLabel();  // Time session (elapsed) information to display
     private JButton restart = new JButton("Restart"); // restart button
     private JPanel panelCenter = new JPanel();
-    private Levels levelGame;
-    private JLabel timeLimitInfo = new JLabel();
-    private JLabel levelGameModeInfo = new JLabel();
+    private Levels levelGame;       // Current game level
+    private JLabel timeLimitInfo = new JLabel();    // Time limit info / selected
+    private JLabel levelGameModeInfo = new JLabel();   
 
-    GUI(Main main){
+    GUI(Main main){     // Constructor for the GUI
         this.main = main;
         this.field = main.getField();
         startNewGame();
     }
 
-    public void startNewGame(){
+    public void startNewGame(){      // Global starter method
         field.initField();
         this.levelGame = field.getLevel();
         this.setTimeLimit();
         this.displayGUI();
     }
-    public void setTimeLimit(){
+    public void setTimeLimit(){ // Allow to set the time limit via Popup or terminal
         if(levelGame.ordinal() == 3){   // CUSTOM limit from Custom level option
 
             // /* TERMINAL ENTRIES MODE : */
@@ -68,7 +68,7 @@ public class GUI extends JPanel{
         }
         timeLimitInfo.setText(String.valueOf(timeLimit));
     }
-    public void displayGUI(){
+    public void displayGUI(){       // General GUI initialization's method
         setLayout(new BorderLayout());
         this.displayMenu();
         this.timeElapsed();
@@ -77,7 +77,7 @@ public class GUI extends JPanel{
         this.reInitField();
         this.displayStartEmptyField();
     }
-    public void displayMenu(){
+    public void displayMenu(){  // Menu bar for choosing between multiple difficulies and display informations
         JMenuBar menuBar = new JMenuBar();
         JMenuItem menu = new JMenu("Difficulty");
         JMenuItem easyMode =new JMenuItem("EASY");
@@ -96,7 +96,7 @@ public class GUI extends JPanel{
         menuBar.add(menu);
         main.setJMenuBar(menuBar);
 
-
+        // Add different mode on the menu
         easyMode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,7 +137,7 @@ public class GUI extends JPanel{
         menuBar.add(levelGameModeInfo);
 
     }
-    public void displayStartEmptyField(){
+    public void displayStartEmptyField(){  // Restart the game with blank boxes
         remove(panelCenter);  // initialization of the panel
         panelCenter = new JPanel();
         add(panelCenter, BorderLayout.CENTER);
@@ -166,7 +166,9 @@ public class GUI extends JPanel{
         }
     }
 
-    public void initializationField(int xOnStart,int yOnStart) {
+
+    // This function takes the first "clicked" boxe to initialize the field and clear some boxes around it
+    public void initializationField(int xOnStart,int yOnStart) {   // Initialization of boxes with different values for a certain area  / allow to place flags on mines
 
         remove(panelCenter);  // initialization of the panel
         panelCenter = new JPanel();
@@ -215,7 +217,7 @@ public class GUI extends JPanel{
 
 
 
-                else if(box.getText() == "0") {
+                else if(box.getText() == "0") {     // Operations on non-mined boxes
                     double deltaX = Math.abs(xOnStart-xBox);
                     double deltaY = Math.abs(yOnStart-yBox);
                     double result = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
@@ -258,7 +260,7 @@ public class GUI extends JPanel{
                             @Override
                             public void actionPerformed(ActionEvent e) {
 
-                                box.setText(field.getElementFromXY(xBox,yBox,true));
+                                box.setText(field.getElementFromXY(xBox,yBox,true));    // Change the value with the computed one
                                 box.setBackground(Color.GRAY);
                                 switch(Integer.valueOf( box.getText() ) ){      // Set the Color of the number depending on its value
                                     case 0:
@@ -309,7 +311,7 @@ public class GUI extends JPanel{
     }
 
 
-    public void restartGame(){
+    public void restartGame(){      // Restart a game 
         add(restart, BorderLayout.SOUTH);
         restart.addActionListener(new ActionListener() {
             @Override
@@ -320,7 +322,7 @@ public class GUI extends JPanel{
 
     }
 
-    public void reInitField(){
+    public void reInitField(){      // re-init a field, timer, and parameter of the game
         seconds = 0;
         scoreTemp = 0;
         score.setText(String.valueOf(scoreTemp));
@@ -331,7 +333,7 @@ public class GUI extends JPanel{
         this.displayStartEmptyField();
     }
 
-    public void timeElapsed(){
+    public void timeElapsed(){      // Display the time Elapsed since the beginning
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -347,7 +349,7 @@ public class GUI extends JPanel{
     }
 
 
-    public void displayScore(){
+    public void displayScore(){     // Display the current score of the player
         JPanel panelNorth = new JPanel();
         add(panelNorth, BorderLayout.NORTH);
         panelNorth.setLayout(new FlowLayout());
