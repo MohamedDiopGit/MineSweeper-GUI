@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
-import java.util.Scanner;
+// import java.util.Scanner;  // For terminal entries mode
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
@@ -14,13 +14,13 @@ import static javax.swing.SwingUtilities.isRightMouseButton;
 public class GUI extends JPanel{
 
 
-    private final Field field;
+    private Field field;
 
-    private final Main main;
+    private Main main;
 
     private Timer timer;
     private int seconds =0;  // Seconds elapsed since the beginning
-    private final int timeLimits[] = {10,100,30}; // Number of seconds fixing the time limit : it should depends on the level 
+    private final int timeLimits[] = {300,100,30}; // Number of seconds fixing the time limit : it should depends on the level 
     private int timeLimit;
     
     private JLabel score = new JLabel();
@@ -31,36 +31,112 @@ public class GUI extends JPanel{
     private JButton restart = new JButton("Restart"); // restart button
     private JPanel panelCenter = new JPanel();
     private Levels levelGame;
-
+    private JLabel timeLimitInfo = new JLabel();
+    private JLabel levelGameModeInfo = new JLabel();
 
     GUI(Main main){
         this.main = main;
         this.field = main.getField();
+        startNewGame();
+    }
+
+    public void startNewGame(){
+        field.initField();
         this.levelGame = field.getLevel();
         this.setTimeLimit();
         this.displayGUI();
     }
-
     public void setTimeLimit(){
-        if(levelGame.ordinal() == 4){   // CUSTOM limit from Custom level option
-            Scanner sc = new Scanner(System.in);
-            System.out.print("[CUSTOM] Select the time limit: ");
-            int parameter = sc.nextInt();
-            this.timeLimit = parameter;
+        if(levelGame.ordinal() == 3){   // CUSTOM limit from Custom level option
+
+            // /* TERMINAL ENTRIES MODE : */
+            // Scanner sc = new Scanner(System.in);
+            // System.out.print("[CUSTOM] Select the time limit: ");
+            // int parameter = sc.nextInt();
+
+            JTextField parameter = new JTextField();
+            Object[] message = {
+                "Time limit (s):", parameter,
+            };
+            int option = JOptionPane.showConfirmDialog(null, message, "Set Game Parameters", JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION) { // Check if OK_OPTION is ok
+                this.timeLimit = Integer.valueOf(parameter.getText());
+            }  
         }
         else{
             this.timeLimit = timeLimits[levelGame.ordinal()];
         }
+        timeLimitInfo.setText(String.valueOf(timeLimit));
     }
     public void displayGUI(){
         setLayout(new BorderLayout());
+        this.displayMenu();
         this.timeElapsed();
         this.displayScore();
         this.restartGame();
         this.reInitField();
         this.displayStartEmptyField();
     }
+    public void displayMenu(){
+        JMenuBar menuBar = new JMenuBar();
+        JMenuItem menu = new JMenu("Difficulty");
+        JMenuItem easyMode =new JMenuItem("EASY");
+        JMenuItem mediumMode=new JMenuItem("MEDIUM");
+        JMenuItem hardMode=new JMenuItem("HARD");
+        JMenuItem customMode=new JMenuItem("CUSTOM");
+        JLabel timeLimitText = new JLabel("Time Limit: ");
+        JLabel levelGameModeText = new JLabel(" | Mode: ");
+ 
+        levelGameModeInfo.setText("EASY");
 
+        menu.add(easyMode);
+        menu.add(mediumMode);
+        menu.add(hardMode);
+        menu.add(customMode);
+        menuBar.add(menu);
+        main.setJMenuBar(menuBar);
+
+
+        easyMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                field = new Field(Levels.EASY);
+                levelGameModeInfo.setText("EASY");
+                startNewGame();
+            }
+        });
+        mediumMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                field = new Field(Levels.MEDIUM);
+                levelGameModeInfo.setText("MEDIUM");
+                startNewGame();
+            }
+        });
+        hardMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                field = new Field(Levels.HARD);
+                levelGameModeInfo.setText("HARD");
+                startNewGame();
+            }
+        });
+        customMode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                field = new Field(Levels.CUSTOM);
+                levelGameModeInfo.setText("CUSTOM");
+                startNewGame();
+            }
+        });
+
+
+        menuBar.add(timeLimitText);
+        menuBar.add(timeLimitInfo);
+        menuBar.add(levelGameModeText);
+        menuBar.add(levelGameModeInfo);
+
+    }
     public void displayStartEmptyField(){
         remove(panelCenter);  // initialization of the panel
         panelCenter = new JPanel();

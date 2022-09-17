@@ -1,13 +1,15 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 public class Field {
 
     /* Field parameters */
     //private final static int NBMINES = 3;
     private final int nbMinesToPlace; // Number of mines to place on the minefield
     private final static int nbMines[] = {3 ,7 ,10, 15}; // Possible mines of the minefield depending on level difficulty
-    private final static int DIM = 5;       // Dimension of the minefield
     private final static int dimParam[] = {5 ,7 ,9, 12};  // Possible dimensions of the minefield depending on level difficulty
     private final int dimParameter;
 
@@ -24,16 +26,37 @@ public class Field {
         this.levelGame = level;
         if(level.ordinal() == 3){       // CUSTOM level = 3
 
-            // The user select the number of mines to place:
-            System.out.print("Select the number of mines: ");
-            int nbMinesToSelect = setParameter();
+            /* TERMINAL ENTRIES MODE */
+            // // The user select the number of mines to place:
+            // System.out.print("Select the number of mines: ");
+            // int nbMinesToSelect = setParameter();
 
-            // The user select the dimension of the minefield:
-            System.out.print("Select the X dimension of the square field: ");
-            int dimParamToSelect = setParameter();
+            // // The user select the dimension of the minefield:
+            // System.out.print("Select the X dimension of the square field: ");
+            // int dimParamToSelect = setParameter();
 
-            nbMinesToPlace = nbMinesToSelect;
-            dimParameter = dimParamToSelect;
+            /* POPUP ENTRIES MODE */
+            JTextField dimParamToSelect = new JTextField();
+            JTextField nbMinesToSelect = new JTextField();
+            Object[] message = {
+                "Dimensions:", dimParamToSelect,
+                "Number of mines:", nbMinesToSelect
+            };
+
+            int option = JOptionPane.showConfirmDialog(null, message, "Set Game Parameters", JOptionPane.OK_CANCEL_OPTION);
+
+            if (option == JOptionPane.OK_OPTION) { // Check if OK_OPTION is ok
+                nbMinesToPlace = Integer.valueOf(nbMinesToSelect.getText());
+                dimParameter = Integer.valueOf(dimParamToSelect.getText());
+            }  
+            else{  // Catch the error case 
+                level = Levels.EASY;
+                JOptionPane.showMessageDialog(null, "Error in setting parameters, please try again. EASY_MODE selected.",
+                                        "ERROR", JOptionPane.WARNING_MESSAGE);
+                nbMinesToPlace = nbMines[level.ordinal()];  // EASY = 0 / MEDIUM = 1 / HARD = 2
+                dimParameter = dimParam[level.ordinal()];
+            }
+
         }
         else{
             nbMinesToPlace = nbMines[level.ordinal()];  // EASY = 0 / MEDIUM = 1 / HARD = 2
@@ -50,9 +73,10 @@ public class Field {
         this.nbMinesToPlace = nbMinesPlaced;
     }
     public int setParameter(){
-        Scanner sc = new Scanner(System.in);
-        int parameter = sc.nextInt();
-        return parameter;
+        try (Scanner sc = new Scanner(System.in)) {
+            int parameter = sc.nextInt();
+            return parameter;
+        }
     }
     /* Field methods */
     public void initField() {      // Place the mine in the field

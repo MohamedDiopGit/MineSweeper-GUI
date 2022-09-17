@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Main extends JFrame {
     private final GUI gui;
-    private final Field field = new Field(Levels.MEDIUM);
+    private final Field field = new Field(Levels.EASY);  // EASY mode for start / by default
     Main(){
         System.out.println("Minesweeper GUI : Launched");
         setTitle("Minesweeper GUI");
