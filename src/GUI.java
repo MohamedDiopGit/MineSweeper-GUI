@@ -19,11 +19,16 @@ public class GUI extends JPanel{
 
     private Timer timer;
     private int seconds =0;  // Seconds elapsed since the beginning
+    private int timeLimit = 20; // Number of seconds fixing the time limit : it should depends on the level 
+    
     private JLabel score = new JLabel();
     private int scoreTemp = 0;
+    
+
     private JLabel timeSession = new JLabel();
     private JButton restart = new JButton("Restart"); // restart button
     private JPanel panelCenter = new JPanel();
+
 
     GUI(Main main){
         this.main = main;
@@ -108,7 +113,7 @@ public class GUI extends JPanel{
                             else if(isLeftMouseButton(event) && box.getText() != "🚩"){  // Check if Left click and not a mine discovered : GAME OVER
                                 // Code To popup an Game Over message :
                                 JOptionPane.showMessageDialog(main, "You clicked on a mine : Game Over LOOSER 🤣",
-                                        "ERROR", JOptionPane.WARNING_MESSAGE);
+                                        "GAME OVER", JOptionPane.WARNING_MESSAGE);
                                 reInitField();
                             }
                         }
@@ -159,6 +164,7 @@ public class GUI extends JPanel{
                         box.addActionListener(new ActionListener() {  // OnClick event : Discover them and their computed value
                             @Override
                             public void actionPerformed(ActionEvent e) {
+
                                 box.setText(field.getElementFromXY(xBox,yBox,true));
                                 box.setBackground(Color.GRAY);
                                 switch(Integer.valueOf( box.getText() ) ){      // Set the Color of the number depending on its value
@@ -185,6 +191,7 @@ public class GUI extends JPanel{
                                         break;
 
                                 }
+                                
 
                             }  
                         });
@@ -224,6 +231,11 @@ public class GUI extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 seconds++;
                 timeSession.setText(String.valueOf(seconds));
+                if(seconds == timeLimit){
+                    JOptionPane.showMessageDialog(main, "TIME LIMIT : Game Over LOOSER 🤣",
+                                        "GAME OVER", JOptionPane.WARNING_MESSAGE);
+                                reInitField();
+                }
             }
         });
     }
