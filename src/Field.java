@@ -16,7 +16,7 @@ public class Field {
     private final int dimParameter;
 
     private boolean [][] fieldGrid; // Minefield
-    private int nbMinesPlaced = 0;  // Number of mines placed during the minefield calculation
+    private int nbMinesPlaced = 0;  // Number of mines placed during the minefield calculation in initField() method
 
     private Levels levelGame;
     Field(){
@@ -132,6 +132,10 @@ public class Field {
 
     public int getDim(){  // Getter : return the dimension parameter of the grid
         return this.dimParameter;
+    }
+
+    public int getNumberOfMines(){  // Getter : return the number of mines parameter from the grid 
+        return this.nbMinesToPlace;
     }
 
     public String getElementFromXY(int x, int y, boolean computeOrNot){  // Return the current state of a case on the grid

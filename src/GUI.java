@@ -25,10 +25,11 @@ public class GUI extends JPanel{
     
     private JLabel score = new JLabel();    // score of the current game session
     private int scoreTemp = 0;
-    
+
+    private boolean firstRun = false;       // Boolean flag for first run
     
     private JLabel timeSession = new JLabel();  // Time session (elapsed) information to display
-    private JButton restart = new JButton("Restart"); // restart button
+    private JButton restart = new JButton("🙂 Restart"); // restart button
     private JPanel panelCenter = new JPanel();
     private Levels levelGame;       // Current game level
     private JLabel timeLimitInfo = new JLabel();    // Time limit info / selected
@@ -82,6 +83,8 @@ public class GUI extends JPanel{
         this.reInitField();
         this.displayStartEmptyField();
     }
+
+
     public void displayMenu(){  // Menu bar for choosing between multiple difficulies and display informations
         JMenuBar menuBar = new JMenuBar();
         JMenuItem menu = new JMenu("Difficulty");
@@ -92,7 +95,10 @@ public class GUI extends JPanel{
         JLabel timeLimitText = new JLabel("Time Limit: ");
         JLabel levelGameModeText = new JLabel(" | Mode: ");
  
-        levelGameModeInfo.setText("EASY");
+        if(firstRun){
+            levelGameModeInfo.setText("EASY");
+            firstRun = false;
+        }
 
         menu.add(easyMode);
         menu.add(mediumMode);
@@ -207,6 +213,11 @@ public class GUI extends JPanel{
                                 if(field.getElementFromXY(xBox,yBox,false) == "x" && box.getText() != "🚩"){  // Chech if there is a mine and not flagged before
                                    scoreTemp++;
                                    score.setText(String.valueOf(scoreTemp));
+                                   if( scoreTemp == field.getNumberOfMines() ){
+                                    JOptionPane.showMessageDialog(main, "You won ! : what a player 💯",
+                                        "Game win", JOptionPane.WARNING_MESSAGE);
+                                        reInitField();
+                                   }
                                 }
                                 box.setText("🚩");
                             }
