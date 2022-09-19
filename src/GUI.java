@@ -26,7 +26,7 @@ public class GUI extends JPanel{
     private JLabel score = new JLabel();    // score of the current game session
     private int scoreTemp = 0;
 
-    private boolean firstRun = false;       // Boolean flag for first run
+    private boolean firstRun = true;       // Boolean flag for first run
     
     private JLabel timeSession = new JLabel();  // Time session (elapsed) information to display
     private JButton restart = new JButton("🙂 Restart"); // restart button
