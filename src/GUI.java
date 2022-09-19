@@ -1,54 +1,135 @@
-/*
-    Graphical User Interface
+
+/**
+ * Graphic User Interface
  */
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
-// import java.util.Scanner;  // For terminal entries mode
+// import java.util.Scanner;  // For terminal entries mode, uncomment it if you want to use terminal entries. 
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
 
-public class GUI extends JPanel{
+/**
+ * {@code GUI} : Graphic User Interface class, extends {@code JPanel}.
+ * The main component that runs the Graphic interface,
+ * and manages the front and back-end process to call entities and specific
+ * functions
+ * in order to display the information.
+ * It allows to display the grid, the menubar on the main frame and the pop-ups
+ * to give and collect data correctly.
+ */
+public class GUI extends JPanel {
 
+    /**
+     * Field to be process for the grid and display in the GUI.
+     */
+    private Field field;
 
-    private Field field;    // Field to play with and display in the GUI
+    /**
+     * imported Main from the "main.java".
+     */
+    private Main main; //
 
-    private Main main;  // imported Main from the "main.java"
+    /**
+     * Timer for the session which update every second the {@code timeSession}.
+     */
+    private Timer timer;
 
-    private Timer timer;    // timer for the session which update every second the "timeSession"
-    private int seconds =0;  // Seconds elapsed since the beginning
-    private final int timeLimits[] = {300,150,70}; // Number of seconds fixing the time limit : it should depends on the level0
-    private int timeLimit;  // Time limit for the game session
-    
-    private JLabel score = new JLabel();    // score of the current game session
+    /**
+     * Seconds elapsed since the beginning.
+     */
+    private int seconds = 0;
+
+    /**
+     * Reference for the number of seconds fixing the time limit :
+     * for the 3 different level mode.
+     */
+    private final int timeLimits[] = { 300, 150, 70 };
+    /**
+     * Time limit for the game session which depends on the game mode.
+     */
+    private int timeLimit;
+
+    /**
+     * score of the current game session.
+     */
+    private JLabel score = new JLabel();
+    /**
+     * Score of the current game session to be copy on the {@code JLabel} instance.
+     */
     private int scoreTemp = 0;
 
-    private boolean firstRun = true;       // Boolean flag for first run
-    
-    private JLabel timeSession = new JLabel();  // Time session (elapsed) information to display
-    private JButton restart = new JButton("🙂 Restart"); // restart button
-    private JPanel panelCenter = new JPanel();
-    private Levels levelGame;       // Current game level
-    private JLabel timeLimitInfo = new JLabel();    // Time limit info / selected
-    private JLabel levelGameModeInfo = new JLabel();   
+    /**
+     * Boolean flag for first run cehcking
+     */
+    private boolean firstRun = true;
 
-    GUI(Main main){     // Constructor for the GUI
+    /**
+     * Time session (elapsed) information to display
+     */
+    private JLabel timeSession = new JLabel();
+
+    /**
+     * restart button's text
+     */
+    private JButton restart = new JButton("🙂 Restart");
+
+    /**
+     * Pane in the center of the screen that displays the grid
+     */
+    private JPanel panelCenter = new JPanel();
+    /**
+     * Current game level of the session
+     * 
+     * @see Levels
+     */
+    private Levels levelGame;
+
+    /**
+     * Time limit's text
+     */
+    private JLabel timeLimitInfo = new JLabel();
+    /**
+     * Game mode's text
+     */
+    private JLabel levelGameModeInfo = new JLabel();
+
+    /**
+     * Constructor for the GUI, which starts the game.
+     * 
+     * @param {@code Main} : the main component that contains a {@code Field}.
+     * @see #startNewGame()
+     */
+    GUI(Main main) {
         this.main = main;
         this.field = main.getField();
         startNewGame();
     }
 
-    public void startNewGame(){      // Global starter method
+    /**
+     * Global starter method which starts and initializes the game
+     * by launching {@code displayGUI()}, {@code setTimeLimit()},
+     * {@code Field.initField()} methods and catch the game level in the GUI.
+     * 
+     * @see #setTimeLimit()
+     * @see #displayGUI()
+     */
+    public void startNewGame() {
         field.initField();
         this.levelGame = field.getLevel();
         this.setTimeLimit();
         this.displayGUI();
     }
-    public void setTimeLimit(){ // Allow to set the time limit via Popup or terminal
-        if(levelGame.ordinal() == 3){   // CUSTOM limit from Custom level option
+
+    /**
+     * Allow to set the time limit via Popup or automatically
+     * via the Game mode {@code Levels} selected.
+     */
+    public void setTimeLimit() { //
+        if (levelGame.ordinal() == 3) { // Custom limit from CUSTOM level option
 
             // /* TERMINAL ENTRIES MODE : */
             // Scanner sc = new Scanner(System.in);
@@ -57,24 +138,38 @@ public class GUI extends JPanel{
 
             JTextField parameter = new JTextField();
             Object[] message = {
-                "Time limit (s):", parameter,
+                    "Time limit (s):", parameter,
             };
-            int option = JOptionPane.showConfirmDialog(null, message, "Set Game Parameters", JOptionPane.OK_CANCEL_OPTION);
-            if (option == JOptionPane.OK_OPTION) { // Check if OK_OPTION is ok
+            int option = JOptionPane.showConfirmDialog(null, message, "Set Game Parameters",
+                    JOptionPane.OK_CANCEL_OPTION);
+            if (option == JOptionPane.OK_OPTION) { // Check if something is entered
                 this.timeLimit = Integer.valueOf(parameter.getText());
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Error in setting time limit, please try again. 300s selected.",
-                                        "ERROR", JOptionPane.WARNING_MESSAGE);
+                        "ERROR", JOptionPane.WARNING_MESSAGE);
                 this.timeLimit = timeLimits[0];
             }
-        }
-        else{
+        } else {
             this.timeLimit = timeLimits[levelGame.ordinal()];
         }
         timeLimitInfo.setText(String.valueOf(timeLimit));
     }
-    public void displayGUI(){       // General GUI initialization's method
+
+    /**
+     * Main GUI initialization's method for the main frame, it displays the menu,
+     * the time elapsed
+     * the current score, the restart button, and display the field at the beginning
+     * (with hidden boxes)
+     * on the frame.
+     * 
+     * @see #displayMenu()
+     * @see #displayScore()
+     * @see #timeElapsed()
+     * @see #restartGame()
+     * @see #reInitField()
+     * @see #displayStartEmptyField()
+     */
+    public void displayGUI() {
         setLayout(new BorderLayout());
         this.displayMenu();
         this.timeElapsed();
@@ -84,18 +179,26 @@ public class GUI extends JPanel{
         this.displayStartEmptyField();
     }
 
-
-    public void displayMenu(){  // Menu bar for choosing between multiple difficulies and display informations
+    /**
+     * Displays the menu bar for choosing between multiple difficulties
+     * and display their informations.
+     * It adds the {@code ActionListener} on the difficulty options,
+     * in order to {@code startNewGame()} with parameters depending on level game
+     * mode.
+     * 
+     * @see #startNewGame()
+     */
+    public void displayMenu() {
         JMenuBar menuBar = new JMenuBar();
         JMenuItem menu = new JMenu("Difficulty");
-        JMenuItem easyMode =new JMenuItem("EASY");
-        JMenuItem mediumMode=new JMenuItem("MEDIUM");
-        JMenuItem hardMode=new JMenuItem("HARD");
-        JMenuItem customMode=new JMenuItem("CUSTOM");
+        JMenuItem easyMode = new JMenuItem("EASY");
+        JMenuItem mediumMode = new JMenuItem("MEDIUM");
+        JMenuItem hardMode = new JMenuItem("HARD");
+        JMenuItem customMode = new JMenuItem("CUSTOM");
         JLabel timeLimitText = new JLabel("Time Limit: ");
         JLabel levelGameModeText = new JLabel(" | Mode: ");
- 
-        if(firstRun){
+
+        if (firstRun) {
             levelGameModeInfo.setText("EASY");
             firstRun = false;
         }
@@ -141,26 +244,36 @@ public class GUI extends JPanel{
             }
         });
 
-
+        // Add the information about the level game
         menuBar.add(timeLimitText);
         menuBar.add(timeLimitInfo);
         menuBar.add(levelGameModeText);
         menuBar.add(levelGameModeInfo);
 
     }
-    public void displayStartEmptyField(){  // Restart the game with blank boxes
-        remove(panelCenter);  // initialization of the panel
+
+    /**
+     * Restarts and displays the grid field with hidden boxes
+     * and add the start {@code ActionListener} on each of them
+     * to know where to start the game,
+     * in order to trigger the {@code initializationField()} method on a specific
+     * box.
+     * 
+     * @see #initializationField(int, int)
+     */
+    public void displayStartEmptyField() {
+        remove(panelCenter); // initialization of the panel
         panelCenter = new JPanel();
         add(panelCenter, BorderLayout.CENTER);
 
-        int dimParam = this.field.getDim();     // Get the dimensions of the field
+        int dimParam = this.field.getDim(); // Get the dimensions of the field
         panelCenter.setLayout(new GridLayout(dimParam, dimParam));
 
         for (int x = 0; x < dimParam; x++) {
-            for (int y = 0; y < dimParam; y++) {    // For loop on the matrix to display all objects
-                JButton box = new JButton();  // Clickable button on each minefield's boxes
+            for (int y = 0; y < dimParam; y++) { // For loop on the matrix to display all objects
+                JButton box = new JButton(); // Clickable button on each minefield's boxes
                 box.setBackground(Color.WHITE);
-                box.setPreferredSize(new Dimension(70,60));
+                box.setPreferredSize(new Dimension(70, 60));
                 panelCenter.add(box);
 
                 final int xOnStart = x;
@@ -169,59 +282,80 @@ public class GUI extends JPanel{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setVisible(false);
-                        initializationField(xOnStart,yOnStart);
-                        setVisible(true);       // Update of the frame fixing frozen frame bug
+                        initializationField(xOnStart, yOnStart);
+                        setVisible(true); // Update of the frame fixing frozen frame bug
                     }
                 });
             }
         }
     }
 
+    /**
+     * This function takes the first "clicked" box {@code JButton}
+     * to initialize the grid {@code GridLayout} from {@code JPanel} with the field
+     * and uncover some boxes around it. It also adds {@code MouseAdapter} or
+     * {@code ActionListener} events depending
+     * on the value of the box (mine, hidden box, non-mine) and the user behaviour
+     * (right or left click).
+     * 
+     * @param xOnStart : the x position of the first "clicked" on the hidden boxes'
+     *                 field
+     * @param yOnStart : the y position of the same box
+     */
+    public void initializationField(int xOnStart, int yOnStart) { // Initialization of boxes with different values for a
+                                                                  // certain area / allow to place flags on mines
 
-    // This function takes the first "clicked" boxe to initialize the field and clear some boxes around it
-    public void initializationField(int xOnStart,int yOnStart) {   // Initialization of boxes with different values for a certain area  / allow to place flags on mines
-
-        remove(panelCenter);  // initialization of the panel
+        remove(panelCenter); // initialization of the panel
         panelCenter = new JPanel();
         add(panelCenter, BorderLayout.CENTER);
 
-        int dimParam = this.field.getDim();     // Get the dimensions of the field
+        int dimParam = this.field.getDim(); // Get the dimensions of the field
         panelCenter.setLayout(new GridLayout(dimParam, dimParam));
 
+        // Loop on the entire field elements
         for (int x = 0; x < dimParam; x++) {
-            for (int y = 0; y < dimParam; y++) {    // For loop on the matrix to display all objects
+            for (int y = 0; y < dimParam; y++) { // For loop on the matrix to display all objects
                 final int xBox = x;
                 final int yBox = y;
 
-
-                JButton box = new JButton(this.field.getElementFromXY(x,y,false));  // Clickeable button on each minefield's boxes
+                // Add a box on the grid
+                JButton box = new JButton(this.field.getElementFromXY(x, y, false)); // Clickeable button on each
+                                                                                     // minefield's boxes
                 box.setBackground(Color.WHITE);
-                box.setPreferredSize(new Dimension(70,60));
+                box.setPreferredSize(new Dimension(70, 60));
                 panelCenter.add(box);
 
+                if (box.getText() == "x") { // If there is a mine
+                    box.setText(""); // Hide it with a white background and not text
 
-
-                if(box.getText() == "x"){  // If there is a mine
-                    box.setText("");   // Hide it with a white background and not text
-                    
-                    box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over event"
+                    box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over
+                                                              // event"
                         @Override
                         public void mouseClicked(MouseEvent event) {
 
-                            if (isRightMouseButton(event))  // Set the box with a red flag
+                            if (isRightMouseButton(event)) // Set the box with a red flag
                             {
-                                if(field.getElementFromXY(xBox,yBox,false) == "x" && box.getText() != "🚩"){  // Chech if there is a mine and not flagged before
-                                   scoreTemp++;
-                                   score.setText(String.valueOf(scoreTemp));
-                                   if( scoreTemp == field.getNumberOfMines() ){
-                                    JOptionPane.showMessageDialog(main, "You won ! : what a player 💯",
-                                        "Game win", JOptionPane.WARNING_MESSAGE);
+                                if (field.getElementFromXY(xBox, yBox, false) == "x" && box.getText() != "🚩") { // Check
+                                                                                                                 // if
+                                                                                                                 // there
+                                                                                                                 // is a
+                                                                                                                 // mine
+                                                                                                                 // and
+                                                                                                                 // not
+                                                                                                                 // flagged
+                                                                                                                 // before
+                                    scoreTemp++;
+                                    score.setText(String.valueOf(scoreTemp));
+                                    if (scoreTemp == field.getNumberOfMines()) {
+                                        JOptionPane.showMessageDialog(main, "You won ! : what a player 💯",
+                                                "Game win", JOptionPane.WARNING_MESSAGE);
                                         reInitField();
-                                   }
+                                    }
                                 }
                                 box.setText("🚩");
-                            }
-                            else if(isLeftMouseButton(event) && box.getText() != "🚩"){  // Check if Left click and not a mine discovered : GAME OVER
+                            } else if (isLeftMouseButton(event) && box.getText() != "🚩") { // Check if Left click and
+                                                                                            // not a mine discovered :
+                                                                                            // GAME OVER
                                 // Code To popup an Game Over message :
                                 JOptionPane.showMessageDialog(main, "You clicked on a mine : Game Over LOOSER 🤣",
                                         "GAME OVER", JOptionPane.WARNING_MESSAGE);
@@ -231,21 +365,20 @@ public class GUI extends JPanel{
                     });
                 }
 
-
-
-                else if(box.getText() == "0") {     // Operations on non-mined boxes
-                    double deltaX = Math.abs(xOnStart-xBox);
-                    double deltaY = Math.abs(yOnStart-yBox);
-                    double result = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+                else if (box.getText() == "0") { // Operations on non-mined boxes
+                    double deltaX = Math.abs(xOnStart - xBox);
+                    double deltaY = Math.abs(yOnStart - yBox);
+                    double result = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
                     Random alea = new Random();
 
-                    if(result <= alea.nextDouble((int) dimParam/1.5)){  // Undisover boxes that are in a calculated area with euclidian distance as radius
-
+                    if (result <= alea.nextDouble((int) dimParam / 1.5)) { // Undisover boxes that are in a calculated
+                                                                           // area with euclidian distance as radius
 
                         box.setBackground(Color.GRAY); // Color the unblocked boxes with gray color
-                        box.setText(field.getElementFromXY(xBox,yBox,true));  // Update the text in the box with the computed value
+                        box.setText(field.getElementFromXY(xBox, yBox, true)); // Update the text in the box with the
+                                                                               // computed value
 
-                        switch(Integer.valueOf( box.getText() ) ){     // Set the Color of the number depending on its value
+                        switch (Integer.valueOf(box.getText())) { // Set the Color of the number depending on its value
                             case 0:
                                 box.setBackground(Color.GRAY);
                                 break;
@@ -269,16 +402,18 @@ public class GUI extends JPanel{
                                 break;
 
                         }
-                    }
-                    else{  // Boxes outside the calculated area
-                        box.setText("");  // The boxes are still hidden
-                        box.addActionListener(new ActionListener() {  // OnClick event : Discover them and their computed value
+                    } else { // Boxes outside the calculated area
+                        box.setText(""); // The boxes are still hidden
+                        box.addActionListener(new ActionListener() { // OnClick event : Discover them and their computed
+                                                                     // value
                             @Override
                             public void actionPerformed(ActionEvent e) {
 
-                                box.setText(field.getElementFromXY(xBox,yBox,true));    // Change the value with the computed one
+                                box.setText(field.getElementFromXY(xBox, yBox, true)); // Change the value with the
+                                                                                       // computed one
                                 box.setBackground(Color.GRAY);
-                                switch(Integer.valueOf( box.getText() ) ){      // Set the Color of the number depending on its value
+                                switch (Integer.valueOf(box.getText())) { // Set the Color of the number depending on
+                                                                          // its value
                                     case 0:
                                         box.setBackground(Color.GRAY);
                                         break;
@@ -302,32 +437,46 @@ public class GUI extends JPanel{
                                         break;
 
                                 }
-                                
 
-                            }  
-                        });
-                        box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over event"
-                        @Override
-                        public void mouseClicked(MouseEvent event) {
-
-                            if (isRightMouseButton(event))  // Set the box with a red flag
-                            {
-                                if(field.getElementFromXY(xBox,yBox,false) == "x" && box.getText() != "🚩"){  // Chech if there is a mine and not flagged before
-                                   scoreTemp++;
-                                   score.setText(String.valueOf(scoreTemp));
-                                }
-                                box.setText("🚩");
                             }
-                        }
-                    });
+                        });
+                        box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game
+                                                                  // over event"
+                            @Override
+                            public void mouseClicked(MouseEvent event) {
+
+                                if (isRightMouseButton(event)) // Set the box with a red flag
+                                {
+                                    if (field.getElementFromXY(xBox, yBox, false) == "x" && box.getText() != "🚩") { // Chech
+                                                                                                                     // if
+                                                                                                                     // there
+                                                                                                                     // is
+                                                                                                                     // a
+                                                                                                                     // mine
+                                                                                                                     // and
+                                                                                                                     // not
+                                                                                                                     // flagged
+                                                                                                                     // before
+                                        scoreTemp++;
+                                        score.setText(String.valueOf(scoreTemp));
+                                    }
+                                    box.setText("🚩");
+                                }
+                            }
+                        });
                     }
                 }
             }
         }
     }
 
-
-    public void restartGame(){      // Restart a game 
+    /**
+     * Activates the restart button by adding an {@code ActionListener} event
+     * on the restart button. It will call the {@code reInitField()} method.
+     * 
+     * @see #reInitField()
+     */
+    public void restartGame() { // Restart a game
         add(restart, BorderLayout.SOUTH);
         restart.addActionListener(new ActionListener() {
             @Override
@@ -338,7 +487,15 @@ public class GUI extends JPanel{
 
     }
 
-    public void reInitField(){      // re-init a field, timer, and parameter of the game
+    /**
+     * Generates a new field, and restarts the timer, and the score of the current
+     * game.
+     * It also calls the {@code displayStartEmptyField()} method to clear the
+     * field/grid.
+     * 
+     * @see #displayStartEmptyField()
+     */
+    public void reInitField() {
         seconds = 0;
         scoreTemp = 0;
         score.setText(String.valueOf(scoreTemp));
@@ -349,31 +506,40 @@ public class GUI extends JPanel{
         this.displayStartEmptyField();
     }
 
-    public void timeElapsed(){      // Display the time Elapsed since the beginning
+    /**
+     * Processes the time elapsed since the beginning of the start of a game
+     * session.
+     * It also checks if the time session has outdated the time limit, if so,
+     * it will reinitialize the game after showing a popup (Game over) to the user.
+     * 
+     * @see #reInitField()
+     */
+    public void timeElapsed() { //
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 seconds++;
                 timeSession.setText(String.valueOf(seconds));
-                if(seconds == timeLimit){
+                if (seconds == timeLimit) {
                     JOptionPane.showMessageDialog(main, "TIME LIMIT : Game Over LOOSER 🤣",
-                                        "GAME OVER", JOptionPane.WARNING_MESSAGE);
+                            "GAME OVER", JOptionPane.WARNING_MESSAGE);
                     reInitField();
                 }
             }
         });
     }
 
-
-    public void displayScore(){     // Display the current score of the player
+    /**
+     * Displays the current score of the player on the main frame.
+     */
+    public void displayScore() { //
         JPanel panelNorth = new JPanel();
         add(panelNorth, BorderLayout.NORTH);
         panelNorth.setLayout(new FlowLayout());
-        panelNorth.add( new JLabel("Score: "));
+        panelNorth.add(new JLabel("Score: "));
         panelNorth.add(score);
-        panelNorth.add( new JLabel(" | Time Elapsed(s): "));
+        panelNorth.add(new JLabel(" | Time Elapsed(s): "));
         panelNorth.add(timeSession);
-
 
     }
 
