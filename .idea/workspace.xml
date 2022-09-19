@@ -2,16 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e70b9b20-7a5d-4652-9012-dc98c08743b5" name="Changes" comment="GUI: actualization event onClick for boxes with their computed value">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Field.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Levels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Levels.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/Field.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/Field.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/GUI.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/GUI.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/Levels.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/Levels.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/Main.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/Main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/allclasses-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/allpackages-index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/help-doc.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-10.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-11.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-12.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-13.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-4.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-5.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-6.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-7.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-8.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-9.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/serialized-form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
