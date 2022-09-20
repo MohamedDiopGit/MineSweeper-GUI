@@ -2,33 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e70b9b20-7a5d-4652-9012-dc98c08743b5" name="Changes" comment="GUI: actualization event onClick for boxes with their computed value">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/Field.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/Field.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/GUI.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/GUI.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/Levels.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/Levels.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/Main.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/Main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/allclasses-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/allclasses-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/allpackages-index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/allpackages-index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/help-doc.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/help-doc.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-10.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-10.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-11.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-11.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-12.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-12.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-13.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-13.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-2.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-3.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-4.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-4.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-5.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-5.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-6.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-6.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-7.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-8.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-8.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-9.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index-files/index-9.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/overview-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/package-summary.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/package-tree.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JavaDoc-complient/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/JavaDoc-complient/serialized-form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +36,7 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/diopm/Documents/GitHub/MineSweeper GUI/src&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/diopm/Documents/GitHub/MineSweeper GUI&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -73,18 +48,27 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../../Program Files/Java/jdk-17.0.4.1" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
       <module name="MineSweeper GUI" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="MineSweeper GUI" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

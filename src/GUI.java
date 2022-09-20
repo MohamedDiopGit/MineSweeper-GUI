@@ -15,7 +15,7 @@ import static javax.swing.SwingUtilities.isRightMouseButton;
 /**
  * {@code GUI} : Graphic User Interface class, extends {@code JPanel}.
  * The main component that runs the Graphic interface,
- * and manages the front and back-end process to call entities and specific
+ * and manages the front and back-end processes to call entities and specific
  * functions
  * in order to display the information.
  * It allows to display the grid, the menubar on the main frame and the pop-ups
