@@ -1,8 +1,3 @@
-
-/**
- * Graphic User Interface
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -195,6 +190,7 @@ public class GUI extends JPanel {
         JMenuItem mediumMode = new JMenuItem("MEDIUM");
         JMenuItem hardMode = new JMenuItem("HARD");
         JMenuItem customMode = new JMenuItem("CUSTOM");
+        JButton quit = new JButton("Quit");
         JLabel timeLimitText = new JLabel("Time Limit: ");
         JLabel levelGameModeText = new JLabel(" | Mode: ");
 
@@ -203,11 +199,25 @@ public class GUI extends JPanel {
             firstRun = false;
         }
 
+
+        quit.setBackground(Color.WHITE);
+
         menu.add(easyMode);
         menu.add(mediumMode);
         menu.add(hardMode);
         menu.add(customMode);
+        menuBar.add(quit);
         menuBar.add(menu);
+
+
+        quit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+
+
         main.setJMenuBar(menuBar);
 
         // Add different mode on the menu

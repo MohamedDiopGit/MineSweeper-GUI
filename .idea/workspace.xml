@@ -3,6 +3,21 @@
   <component name="ChangeListManager">
     <list default="true" id="e70b9b20-7a5d-4652-9012-dc98c08743b5" name="Changes" comment="GUI: actualization event onClick for boxes with their computed value">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MineSweeper GUI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MineSweeper-GUI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/Field.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$10.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI$9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/GUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/Levels.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/MineSweeper GUI/Main.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,44 +46,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/diopm/Documents/GitHub/MineSweeper GUI&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "last_opened_file_path": "C:/Users/diopm/Documents/GitHub/MineSweeper-GUI/MineSweeper-GUI.iml",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propCompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper GUI\src" />
+      <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper-GUI\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper GUI\src" />
+      <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper-GUI\src" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../../Program Files/Java/jdk-17.0.4.1" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="MineSweeper-GUI" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="MineSweeper GUI" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="MineSweeper GUI" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
