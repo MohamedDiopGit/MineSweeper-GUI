@@ -122,6 +122,15 @@ public class Field {
     }
 
     /**
+     * Sets the current level of the minefield.
+     * 
+     * @param level
+     */
+    public void setLevel(Levels level) {
+        this.levelGame = level;
+    }
+
+    /**
      * Returns a parameter typed in the terminal.
      * 
      * @return {@code int}

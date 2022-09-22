@@ -1,4 +1,4 @@
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  * {@code Main} application : Minesweeper program.
@@ -8,18 +8,18 @@ public class Main extends JFrame {
      * Main GUI for the game : Minesweeper.
      */
     private final GUI gui;
-
     /**
      * Field to start with in the game.
      */
-    private final Field field = new Field(Levels.EASY); // EASY mode for start / by default
+    private Field field;
 
     Main() {
-        System.out.println("Minesweeper GUI : Launched");
         setTitle("Minesweeper GUI");
+        loadGameLevel(); // Load the game level
         this.field.initField(); // initialisation of the field
 
         gui = new GUI(this);
+        System.out.println("Minesweeper GUI : Launched");
         setContentPane(gui); // Set the center Panel for the frame
         pack();
         setVisible(true);
@@ -42,5 +42,27 @@ public class Main extends JFrame {
      */
     public Field getField() { // Getter of the field
         return this.field;
+    }
+
+    /**
+     * Loads the saved level's configuration from "LevelRegistred.dat"
+     * 
+     * @see LevelsFileReader
+     */
+    public void loadGameLevel() {
+
+        try {
+            LevelsFileReader fileReader = new LevelsFileReader();
+
+            // Waiting for the reader thread to finish loading the level mmode
+            fileReader.geThread().join();
+
+            // Configure the field with the level mode.
+            field = new Field(fileReader.getLevelFromFile());
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("Failed to load last save... EASY_Mode selected.");
+        }
     }
 }

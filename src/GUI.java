@@ -1,8 +1,17 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 // import java.util.Scanner;  // For terminal entries mode, uncomment it if you want to use terminal entries. 
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
@@ -58,11 +67,6 @@ public class GUI extends JPanel {
     private int scoreTemp = 0;
 
     /**
-     * Boolean flag for first run cehcking
-     */
-    private boolean firstRun = true;
-
-    /**
      * Time session (elapsed) information to display
      */
     private JLabel timeSession = new JLabel();
@@ -114,6 +118,8 @@ public class GUI extends JPanel {
      */
     public void startNewGame() {
         field.initField();
+
+        // Deprecated method of level initialization
         this.levelGame = field.getLevel();
         this.setTimeLimit();
         this.displayGUI();
@@ -169,7 +175,7 @@ public class GUI extends JPanel {
         this.displayMenu();
         this.timeElapsed();
         this.displayScore();
-        this.restartGame();
+        this.restartButton();
         this.reInitField();
         this.displayStartEmptyField();
     }
@@ -193,66 +199,32 @@ public class GUI extends JPanel {
         JButton quit = new JButton("Quit");
         JLabel timeLimitText = new JLabel("Time Limit: ");
         JLabel levelGameModeText = new JLabel(" | Mode: ");
+        JButton saveGame = new JButton("Save");
 
-        if (firstRun) {
-            levelGameModeInfo.setText("EASY");
-            firstRun = false;
-        }
+        levelGameModeInfo.setText(String.valueOf(levelGame));
 
-
-        quit.setBackground(Color.WHITE);
+        quit.setBackground(Color.RED);
+        quit.setForeground(Color.WHITE);
+        saveGame.setBackground(Color.ORANGE);
+        saveGame.setForeground(Color.WHITE);
 
         menu.add(easyMode);
         menu.add(mediumMode);
         menu.add(hardMode);
         menu.add(customMode);
         menuBar.add(quit);
+        menuBar.add(saveGame);
         menuBar.add(menu);
 
+        // Add menu options
+        saveGame.addActionListener(evt -> saveGameLevel());
+        quit.addActionListener(evt -> System.exit(0));
 
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                System.exit(0);
-            }
-        });
-
-
-        main.setJMenuBar(menuBar);
-
-        // Add different mode on the menu
-        easyMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                field = new Field(Levels.EASY);
-                levelGameModeInfo.setText("EASY");
-                startNewGame();
-            }
-        });
-        mediumMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                field = new Field(Levels.MEDIUM);
-                levelGameModeInfo.setText("MEDIUM");
-                startNewGame();
-            }
-        });
-        hardMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                field = new Field(Levels.HARD);
-                levelGameModeInfo.setText("HARD");
-                startNewGame();
-            }
-        });
-        customMode.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                field = new Field(Levels.CUSTOM);
-                levelGameModeInfo.setText("CUSTOM");
-                startNewGame();
-            }
-        });
+        // Add different mode in the menu
+        easyMode.addActionListener(evt -> selectorLevelGame(Levels.EASY));
+        mediumMode.addActionListener(evt -> selectorLevelGame(Levels.MEDIUM));
+        hardMode.addActionListener(evt -> selectorLevelGame(Levels.HARD));
+        customMode.addActionListener(evt -> selectorLevelGame(Levels.CUSTOM));
 
         // Add the information about the level game
         menuBar.add(timeLimitText);
@@ -260,6 +232,15 @@ public class GUI extends JPanel {
         menuBar.add(levelGameModeText);
         menuBar.add(levelGameModeInfo);
 
+        // Addd the menu bar to the main frame.
+        main.setJMenuBar(menuBar);
+
+    }
+
+    public void selectorLevelGame(Levels level) {
+        field = new Field(level);
+        levelGameModeInfo.setText(String.valueOf(level));
+        startNewGame();
     }
 
     /**
@@ -486,7 +467,8 @@ public class GUI extends JPanel {
      * 
      * @see #reInitField()
      */
-    public void restartGame() { // Restart a game
+    public void restartButton() { // Restart a game
+        restart.setBackground(Color.WHITE);
         add(restart, BorderLayout.SOUTH);
         restart.addActionListener(new ActionListener() {
             @Override
@@ -551,6 +533,13 @@ public class GUI extends JPanel {
         panelNorth.add(new JLabel(" | Time Elapsed(s): "));
         panelNorth.add(timeSession);
 
+    }
+
+    /**
+     * Saves the game level in a local file "LevelRegistred.dat"
+     */
+    public void saveGameLevel() {
+        new LevelsFileWriter(this.levelGame);
     }
 
 }
