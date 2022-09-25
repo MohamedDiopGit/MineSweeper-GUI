@@ -21,7 +21,7 @@ The four levels as an enum
 The running program and the start of the game with an easy mode by default.  
 
 
-![alt text](https://github.com/MohamedDiopGit/MineSweeperV2-GUI/blob/d94bea9bd9494d9ef457f8133a32d451a4b4334f/minesweeper.png)  
+![alt text](https://github.com/MohamedDiopGit/MineSweeperV2-GUI/blob/3c1e48c07ddca594f9e2d5b8dccb5a103a02f85e/minesweeper.png)  
 
  
 Enjoy.  
