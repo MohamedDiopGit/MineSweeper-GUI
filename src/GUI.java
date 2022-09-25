@@ -35,7 +35,7 @@ public class GUI extends JPanel {
     /**
      * imported Main from the "main.java".
      */
-    private Main main; //
+    private Main main;
 
     /**
      * Timer for the session which update every second the {@code timeSession}.
@@ -166,7 +166,7 @@ public class GUI extends JPanel {
      * @see #displayMenu()
      * @see #displayScore()
      * @see #timeElapsed()
-     * @see #restartGame()
+     * @see #restartButton()
      * @see #reInitField()
      * @see #displayStartEmptyField()
      */

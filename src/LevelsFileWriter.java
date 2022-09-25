@@ -40,7 +40,7 @@ public class LevelsFileWriter implements Runnable {
     /**
      * Writes the given level (int value) in the file.
      * 
-     * @param [{@code String} : stringToWrite
+     * @param {@code String} : stringToWrite
      */
     public static synchronized void writeString(String stringToWrite) {
         try (RandomAccessFile file = new RandomAccessFile("LevelRegistred.dat", "rw")) {

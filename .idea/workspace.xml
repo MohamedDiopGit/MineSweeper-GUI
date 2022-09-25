@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e70b9b20-7a5d-4652-9012-dc98c08743b5" name="Changes" comment="GUI: actualization event onClick for boxes with their computed value">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LevelRegistred.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LevelsFileWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LevelsFileWriter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +51,7 @@
       <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper-GUI\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper-GUI" />
       <recent name="C:\Users\diopm\Documents\GitHub\MineSweeper-GUI\src" />
     </key>
   </component>
