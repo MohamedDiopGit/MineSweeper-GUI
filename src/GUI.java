@@ -177,7 +177,8 @@ public class GUI extends JPanel {
         this.displayScore();
         this.restartButton();
         this.reInitField();
-        this.displayStartEmptyField();
+        // this.displayStartEmptyField();
+        this.initializationField(0, 0);
     }
 
     /**
@@ -310,11 +311,14 @@ public class GUI extends JPanel {
                 final int yBox = y;
 
                 // Add a box on the grid
+                // minefield's boxes
+                Case boxCase = new Case(xOnStart, yOnStart, xBox, yBox,this.field.getElementFromXY(x, y, true), dimParam );
+                panelCenter.add(boxCase);
+
                 JButton box = new JButton(this.field.getElementFromXY(x, y, false)); // Clickeable button on each
-                                                                                     // minefield's boxes
                 box.setBackground(Color.WHITE);
                 box.setPreferredSize(new Dimension(70, 60));
-                panelCenter.add(box);
+                // panelCenter.add(box);
 
                 if (box.getText() == "x") { // If there is a mine
                     box.setText(""); // Hide it with a white background and not text
