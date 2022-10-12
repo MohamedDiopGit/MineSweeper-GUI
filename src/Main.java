@@ -23,10 +23,9 @@ public class Main extends JFrame {
         setContentPane(gui); // Set the center Panel for the frame
         // buttonGUI = new ButtonGUI(this);
         // setContentPane(buttonGUI); // Set the center Panel for the frame
-        System.out.println("Minesweeper GUI : Launched");
-        
+
         pack();
-        //ssetResizable(false);
+        // setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE); // Close correctly the frame
     }

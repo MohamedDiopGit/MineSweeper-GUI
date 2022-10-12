@@ -1,141 +1,44 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
 import static javax.swing.SwingUtilities.isLeftMouseButton;
 import static javax.swing.SwingUtilities.isRightMouseButton;
 
 public class Case extends JPanel implements MouseListener {
-    private int DIM = 60;
+    private int DIM = 50;
     private String text;
-
 
     private boolean leftClick = false;
     private boolean rightClick = false;
-    private JButton box;
     private GUI gui;
-    private int flagPlaced = 0; 
+    private int flagPlaced = 0;
+    private boolean openedCase = false;
 
     private ImageIcon bomb = new ImageIcon("bomb.png");
     private ImageIcon flag = new ImageIcon("flag.png");
-    
-    Case(int x, int y, GUI gui){
+
+    Case(int x, int y, GUI gui) {
         this.gui = gui;
         text = gui.getFieldFromGUI().getElementFromXY(x, y, true);
-        setPreferredSize(new Dimension(DIM,DIM));
-        // addMouseListener(this);
-        box = new JButton(); // Clickeable button on each
-        box.setBackground(Color.WHITE);
-        setLayout(new BorderLayout());
-        box.setPreferredSize(new Dimension(getWidth(),getHeight()));
-        // add(box);
-        box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over
-                                                    // event"
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                if(isRightMouseButton(event)) {
-                    rightClick = true;
-
-                }
-                else if(isLeftMouseButton(event)) {
-                    leftClick = true;
-                }
-                setVisible(false);
-                remove(box);
-                setVisible(true);
-            }
-        });
-        // box.addMouseListener(new MouseAdapter() { // OnClick event : Place a flag or trigger the "Game over
-        //                                             // event"
-        //     @Override
-        //     public void mouseClicked(MouseEvent event) {
-        //         String boxType = field.getElementFromXY(x, y, false);
-        //         String typeClicked = "";
-        //         if (isRightMouseButton(event)) // Set the box with a red flag
-        //         {
-        //             typeClicked = "rightClick";
-        //             if (boxType.equals("x") && box.getText() != "F") {
-        //                 scoreTemp++;
-        //                 gui.changeScore(scoreTemp);
-                        
-        //                 if (scoreTemp == field.getNumberOfMines()) {
-        //                     JOptionPane.showMessageDialog(null, "You won ! : what a player !",
-        //                             "Game win", JOptionPane.WARNING_MESSAGE);
-        //                     // resetMineSweeperOnServer();
-        //                     gui.reInitField();
-        //                 }
-        //             }
-        //             box.setText("F");
-        //         }
-
-        //         else if (isLeftMouseButton(event) && box.getText() != "F") {
-        //             typeClicked = "leftClick";
-        //             // clickBoxOnServer(x, y, typeClicked);
-        //             if(boxType.equals("x")){
-        //                 box.setText("X");
-        //                 // Code To popup an Game Over message :
-        //                 JOptionPane.showMessageDialog(null, "You clicked on a mine : Game Over LOOSER >-<",
-        //                         "GAME OVER", JOptionPane.WARNING_MESSAGE);
-        //                 // resetMineSweeperOnServer(); 
-        //                 gui.reInitField();
-        //             }
-
-        //             else if(boxType.equals("0")){
-        //                 box.setText(field.getElementFromXY(x, y, true)); 
-        //                 box.setBackground(Color.GRAY);
-        //                 switch ( Integer.valueOf(box.getText()) ) {
-        //                     case 0:
-        //                         box.setBackground(Color.GRAY);
-        //                         break;
-        //                     case 1:
-        //                         box.setForeground(Color.BLUE);
-        //                         break;
-        //                     case 2:
-        //                         box.setForeground(Color.GREEN);
-        //                         break;
-        //                     case 3:
-        //                         box.setForeground(Color.RED);
-        //                         break;
-        //                     case 4:
-        //                         box.setForeground(Color.ORANGE);
-        //                         break;
-        //                     case 5:
-        //                         box.setForeground(Color.MAGENTA);
-        //                         break;
-        //                     case 6:
-        //                         box.setForeground(Color.CYAN);
-        //                         break;
-
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
-            addMouseListener(this);
-    }   
-    
-
-    public void placeButton(){
-        remove(box);
-        box.setPreferredSize(new Dimension(getWidth(),getHeight()));
-        add(box);
+        setPreferredSize(new Dimension(DIM, DIM));
+        addMouseListener(this);
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
 
-        if(leftClick){
+        if (leftClick) {
             super.paintComponent(g);
             setBorder(BorderFactory.createLoweredBevelBorder());
-            if(text.equals("x")){
-                g.drawImage(bomb.getImage(),0,0, getWidth(), getHeight(), this);
-            }
-            else{
+            if (text.equals("x")) {
+                g.drawImage(bomb.getImage(), 0, 0, getWidth(), getHeight(), this);
+                gui.gameOver();
+            } else {
                 g.setColor(Color.lightGray);
                 g.fillRect(0, 0, getWidth(), getHeight());
                 g.setFont(new Font("TimesRoman", Font.BOLD, 14));
                 switch (Integer.valueOf(text)) { // Set the Color of the number depending on
-                    //                     // its value
+                    // // its value
                     case 0:
                         g.setColor(Color.GRAY);
                         break;
@@ -158,32 +61,34 @@ public class Case extends JPanel implements MouseListener {
                         g.setColor(Color.CYAN);
                         break;
                 }
-                if(text.equals("0")){
-                    g.drawString(" ", getWidth()/2, getHeight()/2);
+                if (text.equals("0")) { // Draw an empty case
+                    g.drawString(" ", getWidth() / 2, getHeight() / 2);
+                } else { // Draw the case with the specified number of mines around it
+                    g.drawString(text, -3 + (getWidth() + 1) / 2, 3 + (getHeight() + 1) / 2);
                 }
-                else{
-                    g.drawString(text, -3+(getWidth()+1)/2, 3+(getHeight()+1)/2);
+                if(!openedCase){
+                    gui.incrementCasesOpened();
+                    openedCase = true;
                 }
+                gui.checkIfWin(); // Check if the game is winned.
+
             }
-        }
-        else if(rightClick){
+        } else if (rightClick) {
             super.paintComponent(g);
             g.setColor(Color.lightGray);
             g.fillRect(0, 0, getWidth(), getHeight());
             setBorder(BorderFactory.createRaisedBevelBorder());
-            
-            if(flagPlaced == 0){
-                g.drawImage(flag.getImage(),0,0, getWidth(), getHeight(), this);
+
+            if (flagPlaced == 0) {
+                g.drawImage(flag.getImage(), 0, 0, getWidth(), getHeight(), this);
                 gui.downScore();
-                flagPlaced = 1-flagPlaced;
-            }
-            else{
+                flagPlaced = 1 - flagPlaced;
+            } else {
                 gui.upScore();
-                flagPlaced = 1-flagPlaced;
+                flagPlaced = 1 - flagPlaced;
             }
             rightClick = false;
-        }
-        else if(!leftClick && !rightClick){
+        } else if (!leftClick && !rightClick) {
             super.paintComponent(g);
             g.setColor(Color.lightGray);
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -192,14 +97,11 @@ public class Case extends JPanel implements MouseListener {
 
     }
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(isLeftMouseButton(e)) {  // left mouse button
+        if (isLeftMouseButton(e)) { // left mouse button
             leftClick = true;
-        }
-        else if (isRightMouseButton(e)){// right mouse button
+        } else if (isRightMouseButton(e)) {// right mouse button
             rightClick = true;
         }
         repaint();
@@ -217,12 +119,13 @@ public class Case extends JPanel implements MouseListener {
         // exit = true;
         // repaint();
         // // exit = false;
-        
+
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         // nothing to do here
-        
+
     }
 
     @Override
@@ -232,4 +135,3 @@ public class Case extends JPanel implements MouseListener {
     }
 
 }
-

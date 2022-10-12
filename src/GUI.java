@@ -1,8 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
-// import java.util.Scanner;  // For terminal entries mode, uncomment it if you want to use terminal entries. 
-import java.util.concurrent.Flow;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -13,12 +11,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Timer;
-
-import static javax.swing.SwingUtilities.isLeftMouseButton;
-import static javax.swing.SwingUtilities.isRightMouseButton;
-
+import java.util.List;
 /**
  * {@code GUI} : Graphic User Interface class, extends {@code JPanel}.
  * The main component that runs the Graphic interface,
@@ -54,11 +48,12 @@ public class GUI extends JPanel {
      */
     private JLabel scoreLabel = new JLabel();
     /**
-     * scoreLabel of the current game session to be copy on the {@code JLabel} instance.
+     * scoreLabel of the current game session to be copy on the {@code JLabel}
+     * instance.
      */
     private int score;
     private boolean propagated = false;
-
+    private int openedCases = 0;
     /**
      * Time session (elapsed) information to display
      */
@@ -68,9 +63,11 @@ public class GUI extends JPanel {
      * restart button's text
      */
     private ImageIcon restartImg = new ImageIcon("restart.png");
-    private JButton restart = new JButton(new ImageIcon(restartImg.getImage().getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH) ));
+    // private ImageIcon restartPressedImg = new ImageIcon("restartPressed.png");
+    private JButton restart = new JButton(
+            new ImageIcon(restartImg.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH)));
     // private JButton restart = new JButton(new ImageIcon("restart.png"));
-
+    private JMenuItem saveGame = new JMenuItem("Save");
     /**
      * Pane in the center of the screen that displays the grid
      */
@@ -86,9 +83,9 @@ public class GUI extends JPanel {
      * Game mode's text
      */
     private JLabel levelGameModeInfo = new JLabel();
-    JPanel panelNorth = new JPanel(new FlowLayout());
-    JPanel panelNorthCenter = new JPanel(new FlowLayout());
-
+    private JPanel panelNorth = new JPanel(new FlowLayout());
+    private JPanel panelNorthCenter = new JPanel(new FlowLayout());
+    private List<Case> cases = new ArrayList<Case>();
     /**
      * Constructor for the GUI, which starts the game.
      * 
@@ -98,55 +95,35 @@ public class GUI extends JPanel {
     GUI(Main main) {
         this.main = main;
         this.field = main.getField();
-        startNewGame();
+
+        setLayout(new BorderLayout());
         panelNorth.setBackground(Color.lightGray);
         setBorder(BorderFactory.createRaisedBevelBorder());
         panelNorth.setBorder(BorderFactory.createLoweredBevelBorder());
 
+        startNewGame();
+
     }
 
-    public void propagationCase(int xOrigin, int yOrigin){
+    public void propagationCase(int xOrigin, int yOrigin) {
 
         propagated = true;
     }
 
     /**
-     * Global starter method which starts and initializes the game
-     * by launching {@code displayGUI()}.
+     * Global starter method which starts and initializes the game.
      * {@code Field.initField()} methods and catch the game level in the GUI.
-     * 
-     * @see #displayGUI()
      */
     public void startNewGame() {
         field.initField();
-
-        // Deprecated method of level initialization
+        saveGame.setText("Not saved");
+        saveGame.setForeground(Color.RED);
         this.levelGame = field.getLevel();
-        this.displayGUI();
-    }
-
-    /**
-     * Main GUI initialization's method for the main frame, it displays the menu,
-     * the time elapsed
-     * the current scoreLabel, the restart button, and display the field at the beginning
-     * (with hidden boxes)
-     * on the frame.
-     * 
-     * @see #displayMenu()
-     * @see #displayscoreLabel()
-     * @see #timeElapsed()
-     * @see #restartButton()
-     * @see #reInitField()
-     * @see #displayStartEmptyField()
-     */
-    public void displayGUI() {
-        setLayout(new BorderLayout());
         this.timeElapsed();
         this.displayMenu();
         this.restartButton();
         this.reInitField();
-        this.initializationField();  // Comment to have "Case" version of box
-        // this.initializationField(0, 0); // Uncomment to have "Case" version of box
+        this.initializationField(); // Comment to have "Case" version of box
     }
 
     /**
@@ -164,45 +141,35 @@ public class GUI extends JPanel {
         panelNorth.removeAll();
         panelNorth.setLayout(new BorderLayout());
 
-
-
         JMenuBar menuBar = new JMenuBar();
         JMenuItem menu = new JMenu("Mode");
         JMenuItem easyMode = new JMenuItem("EASY");
         JMenuItem mediumMode = new JMenuItem("MEDIUM");
         JMenuItem hardMode = new JMenuItem("HARD");
         JMenuItem customMode = new JMenuItem("CUSTOM");
-        JButton quit = new JButton("Quit");
-        JMenuItem saveGame = new JMenuItem("Save");
+        JMenu option = new JMenu("Options");
 
+        option.add(saveGame);
 
         // Server options
-        JMenuItem connectedClients = new JMenuItem("Connected clients");
-        JMenuItem initConnection = new JMenuItem("Connection to server");
+        JMenuItem connectionToServer = new JMenuItem("Connection to server");
         JMenu infoServer = new JMenu("Server");
-  
-        infoServer.add(connectedClients);
-        infoServer.add(initConnection);
+
+        infoServer.add(connectionToServer);
 
         levelGameModeInfo.setText(String.valueOf(levelGame));
-
-        quit.setBackground(Color.RED);
-        quit.setForeground(Color.WHITE);
 
         menu.add(easyMode);
         menu.add(mediumMode);
         menu.add(hardMode);
         menu.add(customMode);
-        
+
+        menuBar.add(option);
         menuBar.add(infoServer);
         menuBar.add(menu);
         menuBar.add(levelGameModeInfo);
         menuBar.setBorder(BorderFactory.createRaisedBevelBorder());
 
-        // menuBar.add(quit);
-        // restart.setBackground(Color.WHITE);
-        menuBar.add(saveGame);
-        
         timeSession.setForeground(Color.RED);
         scoreLabel.setForeground(Color.RED);
 
@@ -215,26 +182,24 @@ public class GUI extends JPanel {
 
         panelNorthWest.add(scoreLabel);
         panelNorthEast.add(timeSession);
-        
+
         panelNorthWest.setBackground(Color.black);
         panelNorthEast.setBackground(Color.black);
-
 
         restart.setBackground(Color.lightGray);
         restart.setBorder(BorderFactory.createEmptyBorder());
         panelNorthCenter.add(restart);
         panelNorthCenter.setBackground(Color.lightGray);
 
-
         panelNorth.add(panelNorthEast, BorderLayout.EAST);
         panelNorth.add(panelNorthCenter, BorderLayout.CENTER);
         panelNorth.add(panelNorthWest, BorderLayout.WEST);
 
-        
-
         // Add menu options
         saveGame.addActionListener(evt -> saveGameLevel());
-        quit.addActionListener(evt -> System.exit(0));
+
+        // Add connection to server
+        connectionToServer.addActionListener(evt -> modeOnline());
 
         // Add different mode in the menu
         easyMode.addActionListener(evt -> selectorLevelGame(Levels.EASY));
@@ -242,37 +207,27 @@ public class GUI extends JPanel {
         hardMode.addActionListener(evt -> selectorLevelGame(Levels.HARD));
         customMode.addActionListener(evt -> selectorLevelGame(Levels.CUSTOM));
 
-
-
         // Addd the menu bar to the main frame.
         main.setJMenuBar(menuBar);
 
+    }
 
-
-
+    public void modeOnline() {
+        // Launch online mode.
     }
 
     public void selectorLevelGame(Levels level) {
         field = new Field(level);
         levelGameModeInfo.setText(String.valueOf(level));
+        saveGame.setForeground(Color.RED);
         startNewGame();
     }
 
-
     /**
-     * This function takes the first "clicked" box {@code JButton}
-     * to initialize the grid {@code GridLayout} from {@code JPanel} with the field
-     * and uncover some boxes around it. It also adds {@code MouseAdapter} or
-     * {@code ActionListener} events depending
-     * on the value of the box (mine, hidden box, non-mine) and the user behaviour
-     * (right or left click).
-     * 
-     * @param xOnStart : the x position of the first "clicked" on the hidden boxes'
-     *                 field
-     * @param yOnStart : the y position of the same box
+     * Initialization method for the field.
      */
     public void initializationField() { // Initialization of boxes with different values for a
-                                                                  // certain area / allow to place flags on mines
+                                        // certain area / allow to place flags on mines
 
         remove(panelCenter); // initialization of the panel
         panelCenter = new JPanel();
@@ -281,22 +236,15 @@ public class GUI extends JPanel {
         int dimParam = this.field.getDim(); // Get the dimensions of the field
         panelCenter.setLayout(new GridLayout(dimParam, dimParam));
 
+        cases.clear();
         // Loop on the entire field elements
         for (int x = 0; x < dimParam; x++) {
-            for (int y = 0; y < dimParam; y++) { // For loop on the matrix to display all objects
+            for (int y = 0; y < dimParam; y++) { // loop on the matrix to display all objects
 
-                /**
-                 * Case mode for boxes. Uncomment panelCenter.add(boxCase) to get it.
-                 */
-                // Add a box on the grid
-                // minefield's boxes
-                Case boxCase = new Case(x,y,this);
-                panelCenter.add(boxCase);
+                Case caseToAdd = new Case(x, y, this);
+                cases.add(caseToAdd);
+                panelCenter.add(cases.get(cases.size()-1));
 
-                /**
-                 * Box case with JButton mode. Uncomment panelCenter.add(box) to get it.
-                 */
-                
             }
         }
     }
@@ -308,18 +256,20 @@ public class GUI extends JPanel {
      * @see #reInitField()
      */
     public void restartButton() { // Restart a game
-        
+
         restart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                reInitField();
+                startNewGame();
             }
         });
+
 
     }
 
     /**
-     * Generates a new field, and restarts the timer, and the scoreLabel of the current
+     * Generates a new field, and restarts the timer, and the scoreLabel of the
+     * current
      * game.
      * It also calls the {@code displayStartEmptyField()} method to clear the
      * field/grid.
@@ -360,9 +310,9 @@ public class GUI extends JPanel {
      */
     public void saveGameLevel() {
         new LevelsFileWriter(this.levelGame);
+        saveGame.setText("Saved");
+        saveGame.setForeground(new Color(57, 163, 18));
     }
-
-
 
     public Field getFieldFromGUI() {
         return field;
@@ -376,6 +326,26 @@ public class GUI extends JPanel {
     public void downScore() {
         score--;
         scoreLabel.setText(String.valueOf(score));
+    }
+
+    public void gameOver() {
+        JOptionPane.showMessageDialog(this, "Mine clicked on.",
+                "Game over", JOptionPane.INFORMATION_MESSAGE);
+        startNewGame();
+    }
+
+    public void checkIfWin() {
+        int totalCases = field.getDim() * field.getDim();
+        if ( ((totalCases - openedCases) == field.getNumberOfMines()) && score == 0) {
+            JOptionPane.showMessageDialog(this, "You won.",
+                    "Game win", JOptionPane.INFORMATION_MESSAGE);
+            openedCases = 0;
+            startNewGame();
+        }
+    }
+
+    public void incrementCasesOpened() {
+        openedCases++;
     }
 
 }
