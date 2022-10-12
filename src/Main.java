@@ -8,6 +8,7 @@ public class Main extends JFrame {
      * Main GUI for the game : Minesweeper.
      */
     private final GUI gui;
+    // private final ButtonGUI buttonGUI;
     /**
      * Field to start with in the game.
      */
@@ -19,8 +20,11 @@ public class Main extends JFrame {
         this.field.initField(); // initialisation of the field
 
         gui = new GUI(this);
-        System.out.println("Minesweeper GUI : Launched");
         setContentPane(gui); // Set the center Panel for the frame
+        // buttonGUI = new ButtonGUI(this);
+        // setContentPane(buttonGUI); // Set the center Panel for the frame
+        System.out.println("Minesweeper GUI : Launched");
+        
         pack();
         //ssetResizable(false);
         setVisible(true);
