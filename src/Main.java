@@ -15,12 +15,14 @@ public class Main extends JFrame {
     private Field field;
 
     Main() {
-        setTitle("Minesweeper");
+        setTitle("Minesweeper GUI");
         loadGameLevel(); // Load the game level
         this.field.initField(); // initialisation of the field
 
         gui = new GUI(this);
         setContentPane(gui); // Set the center Panel for the frame
+        // buttonGUI = new ButtonGUI(this);
+        // setContentPane(buttonGUI); // Set the center Panel for the frame
 
         pack();
         // setResizable(false);
@@ -66,8 +68,5 @@ public class Main extends JFrame {
             e.printStackTrace();
             System.out.println("Failed to load last save... EASY_Mode selected.");
         }
-    }
-    public GUI getGui(){
-        return this.gui;
     }
 }

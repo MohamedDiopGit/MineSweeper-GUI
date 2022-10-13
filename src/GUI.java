@@ -22,7 +22,7 @@ import java.util.List;
  * It allows to display the grid, the menubar on the main frame and the pop-ups
  * to give and collect data correctly.
  */
-public class GUI extends JPanel implements Runnable {
+public class GUI extends JPanel {
 
     /**
      * Field to be process for the grid and display in the GUI.
@@ -82,13 +82,10 @@ public class GUI extends JPanel implements Runnable {
     /**
      * Game mode's text
      */
-    private JLabel levelMode = new JLabel();
+    private JLabel levelGameModeInfo = new JLabel();
     private JPanel panelNorth = new JPanel(new FlowLayout());
     private JPanel panelNorthCenter = new JPanel(new FlowLayout());
     private List<Case> cases = new ArrayList<Case>();
-    private Client client;
-    private boolean modeOnline = false;
-    private Thread clientSession;
     /**
      * Constructor for the GUI, which starts the game.
      * 
@@ -98,18 +95,6 @@ public class GUI extends JPanel implements Runnable {
     GUI(Main main) {
         this.main = main;
         this.field = main.getField();
-
-        setLayout(new BorderLayout());
-        panelNorth.setBackground(Color.lightGray);
-        setBorder(BorderFactory.createRaisedBevelBorder());
-        panelNorth.setBorder(BorderFactory.createLoweredBevelBorder());
-
-        startNewGame();
-
-    }
-
-    GUI() {
-        this.field = new Field(Levels.EASY);
 
         setLayout(new BorderLayout());
         panelNorth.setBackground(Color.lightGray);
@@ -130,12 +115,15 @@ public class GUI extends JPanel implements Runnable {
      * {@code Field.initField()} methods and catch the game level in the GUI.
      */
     public void startNewGame() {
+        field.initField();
         saveGame.setText("Not saved");
         saveGame.setForeground(Color.RED);
         this.levelGame = field.getLevel();
+        this.timeElapsed();
         this.displayMenu();
         this.restartButton();
-        this.reinitialize();
+        this.reInitField();
+        this.initializationField(); // Comment to have "Case" version of box
     }
 
     /**
@@ -165,13 +153,11 @@ public class GUI extends JPanel implements Runnable {
 
         // Server options
         JMenuItem connectionToServer = new JMenuItem("Connection to server");
-        JMenuItem disconnectionFromServer = new JMenuItem("Disconnect from server");
         JMenu infoServer = new JMenu("Server");
 
         infoServer.add(connectionToServer);
-        infoServer.add(disconnectionFromServer);
 
-        levelMode.setText(String.valueOf(levelGame));
+        levelGameModeInfo.setText(String.valueOf(levelGame));
 
         menu.add(easyMode);
         menu.add(mediumMode);
@@ -181,7 +167,7 @@ public class GUI extends JPanel implements Runnable {
         menuBar.add(option);
         menuBar.add(infoServer);
         menuBar.add(menu);
-        menuBar.add(levelMode);
+        menuBar.add(levelGameModeInfo);
         menuBar.setBorder(BorderFactory.createRaisedBevelBorder());
 
         timeSession.setForeground(Color.RED);
@@ -214,7 +200,6 @@ public class GUI extends JPanel implements Runnable {
 
         // Add connection to server
         connectionToServer.addActionListener(evt -> modeOnline());
-        disconnectionFromServer.addActionListener(evt -> modeOffline());
 
         // Add different mode in the menu
         easyMode.addActionListener(evt -> selectorLevelGame(Levels.EASY));
@@ -228,36 +213,12 @@ public class GUI extends JPanel implements Runnable {
     }
 
     public void modeOnline() {
-        if(!modeOnline){
-            clientSession = new Thread(this);
-            clientSession.start();
-        }
+        // Launch online mode.
     }
-
-    public void modeOffline() {
-        if(modeOnline){
-            client.endSession();
-            clientSession = null;
-            modeOnline = false;
-            setTitleFrame("Minesweeper");
-            startNewGame();
-
-        }
-    }
-
-    public void setTitleFrame(String titleFrame) {
-        main.setTitle(titleFrame);
-    }
-    @Override
-    public void run() {
-        modeOnline = true;
-        client = new Client(this);
-    }
-
 
     public void selectorLevelGame(Levels level) {
         field = new Field(level);
-        levelMode.setText(String.valueOf(level));
+        levelGameModeInfo.setText(String.valueOf(level));
         saveGame.setForeground(Color.RED);
         startNewGame();
     }
@@ -265,7 +226,7 @@ public class GUI extends JPanel implements Runnable {
     /**
      * Initialization method for the field.
      */
-    public void initializationFieldPanel() { // Initialization of boxes with different values for a
+    public void initializationField() { // Initialization of boxes with different values for a
                                         // certain area / allow to place flags on mines
 
         remove(panelCenter); // initialization of the panel
@@ -276,25 +237,23 @@ public class GUI extends JPanel implements Runnable {
         panelCenter.setLayout(new GridLayout(dimParam, dimParam));
 
         cases.clear();
-        int indexCase = 0;
         // Loop on the entire field elements
         for (int x = 0; x < dimParam; x++) {
             for (int y = 0; y < dimParam; y++) { // loop on the matrix to display all objects
 
-                Case caseToAdd = new Case(indexCase, x, y, this, modeOnline);
+                Case caseToAdd = new Case(x, y, this);
                 cases.add(caseToAdd);
                 panelCenter.add(cases.get(cases.size()-1));
 
-                indexCase++;
             }
         }
     }
 
     /**
      * Activates the restart button by adding an {@code ActionListener} event
-     * on the restart button. It will call the {@code reinitialize()} method.
+     * on the restart button. It will call the {@code reInitField()} method.
      * 
-     * @see #reinitialize()
+     * @see #reInitField()
      */
     public void restartButton() { // Restart a game
 
@@ -317,14 +276,15 @@ public class GUI extends JPanel implements Runnable {
      * 
      * @see #displayStartEmptyField()
      */
-    public void reinitialize() {
+    public void reInitField() {
+        seconds = 0;
         score = field.getNumberOfMines();
         scoreLabel.setText(String.valueOf(score));
-        timeInit();
-        
+        timeSession.setText(String.valueOf(seconds));
+        timer.start();
 
-        field.initField();
-        this.initializationFieldPanel();
+        this.main.getField().initField();
+        this.initializationField();
     }
 
     /**
@@ -333,11 +293,9 @@ public class GUI extends JPanel implements Runnable {
      * It also checks if the time session has outdated the time limit, if so,
      * it will reinitialize the game after showing a popup (Game over) to the user.
      * 
-     * @see #reinitialize()
+     * @see #reInitField()
      */
-    public void timeInit() { //
-        seconds = 0;
-        timeSession.setText(String.valueOf(seconds));
+    public void timeElapsed() { //
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -345,7 +303,6 @@ public class GUI extends JPanel implements Runnable {
                 timeSession.setText(String.valueOf(seconds));
             }
         });
-        timer.start();
     }
 
     /**
@@ -374,12 +331,7 @@ public class GUI extends JPanel implements Runnable {
     public void gameOver() {
         JOptionPane.showMessageDialog(this, "Mine clicked on.",
                 "Game over", JOptionPane.INFORMATION_MESSAGE);
-        if(modeOnline){
-            client.sendMessageToServer("-1:resetField");
-        }
-        else{
-            startNewGame();
-        }
+        startNewGame();
     }
 
     public void checkIfWin() {
@@ -388,52 +340,12 @@ public class GUI extends JPanel implements Runnable {
             JOptionPane.showMessageDialog(this, "You won.",
                     "Game win", JOptionPane.INFORMATION_MESSAGE);
             openedCases = 0;
-            if(modeOnline){
-                client.sendMessageToServer("-1:resetField");
-            }
-            else{
-                startNewGame();
-            }
+            startNewGame();
         }
     }
 
     public void incrementCasesOpened() {
         openedCases++;
     }
-
-    public Field getField() {
-        return this.field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
-    }
-
-    public void setFieldXY(int x, int y, boolean valueBool) {
-        field.setFieldGrid(x, y, valueBool);
-    }
-
-    public void updateCase(int indexCaseReceived, String typeClicked) {
-        System.out.println("Received: "+indexCaseReceived+" "+typeClicked);
-        if(typeClicked.equals("rightClick")){
-            cases.get(indexCaseReceived).rightClick();
-        }
-        else if(typeClicked.equals("leftClick")){
-            cases.get(indexCaseReceived).leftClick();
-        }
-    }
-
-	public void setLevelMode(String levelModeSelected) {
-        levelMode.setText(levelModeSelected);
-	}
-
-    public String getLevelMode() {
-        return levelMode.getText();
-    }
-
-    public void notifyClickOnCase(int indexCase, String notification) {
-        client.clickOnCaseToServer(indexCase, notification);
-    }
-
 
 }
