@@ -17,9 +17,13 @@ public class Case extends JPanel implements MouseListener {
 
     private ImageIcon bomb = new ImageIcon("bomb.png");
     private ImageIcon flag = new ImageIcon("flag.png");
-
-    Case(int x, int y, GUI gui) {
+    private boolean modeOnline = false;
+    private int indexCase;
+    
+    Case(int indexCase, int x, int y, GUI gui, boolean modeOnline) {
         this.gui = gui;
+        this.modeOnline = modeOnline;
+        this.indexCase = indexCase;
         text = gui.getFieldFromGUI().getElementFromXY(x, y, true);
         setPreferredSize(new Dimension(DIM, DIM));
         addMouseListener(this);
@@ -101,8 +105,14 @@ public class Case extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         if (isLeftMouseButton(e)) { // left mouse button
             leftClick = true;
+            if(modeOnline){
+                gui.notifyClickOnCase(indexCase,"-1:leftClick");
+            }
         } else if (isRightMouseButton(e)) {// right mouse button
             rightClick = true;
+            if(modeOnline){
+                gui.notifyClickOnCase(indexCase,"-1:rightClick");
+            }
         }
         repaint();
     }
@@ -132,6 +142,27 @@ public class Case extends JPanel implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         // released = true;
         // released = false;
+    }
+
+    public void rightClick() {
+        if(!leftClick){  // No modification if already clicked
+            if(rightClick){  // Switch between right click on and off to add or remove flags
+                rightClick = false;
+                System.out.println("Case: " + "rightClick FALSE");
+                repaint();
+            }
+            else{
+                System.out.println("Case: " + "rightClick");
+                rightClick = true;
+                repaint();
+            }
+        }
+    }
+
+    public void leftClick() { 
+        System.out.println("Case: " + "leftClick TRUE");
+        leftClick = true;
+        repaint();
     }
 
 }
