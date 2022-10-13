@@ -15,7 +15,7 @@ public class Main extends JFrame {
     private Field field;
 
     Main() {
-        setTitle("Minesweeper GUI");
+        setTitle("Minesweeper");
         loadGameLevel(); // Load the game level
         this.field.initField(); // initialisation of the field
 
