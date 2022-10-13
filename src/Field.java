@@ -48,6 +48,7 @@ public class Field {
     Field() {
         this.dimParameter = 4;
         this.nbMinesToPlace = 3;
+        this.fieldGrid = new boolean[dimParameter][dimParameter];
     }
 
     /**
@@ -59,6 +60,7 @@ public class Field {
     Field(int nbMinesPlaced, int dimParameter) {
         this.dimParameter = dimParameter;
         this.nbMinesToPlace = nbMinesPlaced;
+        this.fieldGrid = new boolean[dimParameter][dimParameter];
     }
 
     /**
@@ -246,6 +248,10 @@ public class Field {
             return "0";
         }
 
+    }
+
+    public void setFieldGrid(int x, int y, boolean value){
+        this.fieldGrid[x][y] = value;
     }
 
 }
